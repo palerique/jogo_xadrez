@@ -43,6 +43,10 @@ public class PartidaXadrez {
 		return currentPlayer;
 	}
 	
+	public void setCurrentPlayer(Cor currentPlayer) {
+		this.currentPlayer=currentPlayer;
+	}
+	
 	public boolean getCheck() {
 		return check;
 	}
@@ -242,7 +246,7 @@ public class PartidaXadrez {
 			throw new XadrezException("Não há nenhuma peça na posição de origem");
 		}
 		if (currentPlayer != ((PecaXadrez)board.piece(position)).getColor()) {
-			throw new XadrezException("A peça escolhida não é sua");
+			//throw new XadrezException("A peça escolhida não é sua");
 		}
 		if (!board.piece(position).isThereAnyPossibleMove()) {
 			throw new XadrezException("Não há movimentos possíveis para a peça escolhida");

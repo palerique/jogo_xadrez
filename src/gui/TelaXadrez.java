@@ -140,7 +140,7 @@ public class TelaXadrez extends Application {
             	char c = getColuna(coluna);
 
             	Peca peca = chessMatch.getPieces()[linha][coluna];
-
+            	
             	if(peca!=null) {
 	        		if(peca instanceof Peao) {
 	        			Peao peao = (Peao) peca; 
@@ -208,32 +208,52 @@ public class TelaXadrez extends Application {
     					captured.add(capturedPiece);
     				}
 
-    				chessMatch.getPieces()[target.getLinha()][getColuna(target.getColuna())]=chessMatch.getPieces()[source.getLinha()][getColuna(source.getColuna())];
-    				chessMatch.getPieces()[source.getLinha()][getColuna(source.getColuna())]=null;
+    				PecaXadrez pecaXadrez =null;
+    				pecaXadrez = chessMatch.getPieces()[target.getLinha()][getColuna(target.getColuna())];
+        			chessMatch.getPieces()[target.getLinha()][getColuna(target.getColuna())]=pecaXadrez;
+        			chessMatch.getPieces()[source.getLinha()][getColuna(source.getColuna())]=null;
+    				
     				Canvas canvasDesenhar = null;
     				Canvas canvasLimpar = null;
     				
 	                for(Node n: chessboard.getChildren()) {
 	                    Canvas canvas = (Canvas)n;
 	                    int colunaCanvas = (int)canvas.getLayoutX()/77;
-	                	int linhaCanvas = 8-(int)canvas.getLayoutY()/64;
+	                	int linhaCanvas = -1;
+	                	
+	                	if(chessMatch.getCurrentPlayer().equals(Cor.BLACK)) {
+	                		linhaCanvas = (int)canvas.getLayoutY()/64;
+		                	if(getColuna(source.getColuna())==colunaCanvas && (8-source.getLinha())==linhaCanvas) {
+		                		canvasLimpar=canvas;
+		                	}
 
-	                	if(coluna==colunaCanvas && linha == linhaCanvas) {
+	                	} else {
+	                		linhaCanvas = 8-(int)canvas.getLayoutY()/64;
+		                	if(getColuna(source.getColuna())==colunaCanvas && (source.getLinha())==linhaCanvas) {
+		                		canvasLimpar=canvas;
+		                	}
+	                	}
+
+	                	if(coluna==colunaCanvas && linha==linhaCanvas) {
 	                		canvasDesenhar=canvas;
 	                	}
-
-	                	if(getColuna(source.getColuna())==colunaCanvas && source.getLinha()==linhaCanvas) {
-	                		canvasLimpar=canvas;
-	                	}
+	                	
 	                }
 	                
 	                if(canvasDesenhar!=null && canvasLimpar!=null) {
-	                	desenharPeca(canvasDesenhar, chessMatch.getPieces()[target.getLinha()][getColuna(target.getColuna())]);
-	                	canvasLimpar.getGraphicsContext2D().fillRect(0, 0, canvasLimpar.getWidth(), canvasLimpar.getHeight());
+	    				if(chessMatch.getCurrentPlayer().equals(Cor.BLACK)) {
+	    					desenharPeca(canvasDesenhar, chessMatch.getPieces()[8-source.getLinha()][getColuna(source.getColuna())]);
+	                	} else {
+	                		desenharPeca(canvasDesenhar, chessMatch.getPieces()[8-source.getLinha()][getColuna(source.getColuna())]);
+	                	}
+                		canvasLimpar.getGraphicsContext2D().fillRect(0, 0, canvasLimpar.getWidth(), canvasLimpar.getHeight());
+
+	                	desenharPeca(canvasDesenhar, pecaXadrez);
+	                	
+	    				source=null;
+	    				target=null;
+
 	                }
-			        
-    				source=null;
-    				target=null;
             	}
             }
         });
