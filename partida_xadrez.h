@@ -2,23 +2,6 @@
 #include "pecas.h"
 #include "tabuleiro.h"
 
-#define PEAO_BRANCO 'p'
-#define PEAO_PRETO 'P'
-#define BISPO_BRANCO 'b'
-#define BISPO_PRETO 'B'
-#define CAVALO_BRANCO 'c'
-#define CAVALO_PRETO 'C'
-#define TORRE_BRANCO 't'
-#define TORRE_PRETO 'T'
-#define REI_BRANCO 'k'
-#define REI_PRETO 'K'
-#define RAINHA_BRANCO 'q'
-#define RAINHA_PRETO 'Q'
-#define ESPACO_VAZIO ' '
-#define PRETO 1
-#define BRANCO 0
-
-
 char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= { 
   {TORRE_BRANCO, CAVALO_BRANCO, BISPO_BRANCO, REI_BRANCO, RAINHA_BRANCO, BISPO_BRANCO, CAVALO_BRANCO, TORRE_BRANCO},
   {PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO},
@@ -30,15 +13,10 @@ char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= {
   {TORRE_PRETO, CAVALO_PRETO, BISPO_PRETO, RAINHA_PRETO, REI_PRETO, BISPO_PRETO, CAVALO_PRETO, TORRE_PRETO}
 };
 
-
-
 void inicializar_tabuleiro();
 void exibir_tabuleiro();
 int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual);
 int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtual);
-
-int existePeca(Posicao posicao);
-int ehPecaOponente(Peca peca, Posicao posicaoDestino);
 
 void exibir_tabuleiro() {
 	int linha, coluna;
@@ -209,31 +187,5 @@ int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual) {
 	}
 
 	return movimento_valido;
-}
-
-int posicaoExiste(Posicao posicao) {
-	int retorno=FALSO;
-
-	if(posicao.linha>=0 && posicao.linha<LINHAS_TABULEIRO && posicao.coluna>=0 && posicao.coluna<COLUNAS_TABULEIRO)
-		retorno=VERDADEIRO;
-
-	return retorno;
-}
-
-int existePeca(Posicao posicao) {
-	int retorno=VERDADEIRO;
-
-	if(pecas[posicao.linha][posicao.coluna].tipo==ESPACO_VAZIO)
-		retorno=FALSO;
-	return retorno;
-}
-
-
-int ehPecaOponente(Peca peca, Posicao posicaoDestino) {
-	Peca pecaDestino = pecas[posicaoDestino.linha][posicaoDestino.coluna];
-	if(pecaDestino.cor != peca.cor)
-		return FALSO;
-
-	return VERDADEIRO;
 }
 
