@@ -1,4 +1,4 @@
-#include "xadrez.h"
+#include "partida_xadrez.h"
 
 int main () {
     int linhaPeca, colunaPeca, linhaDestino, colunaDestino, jogadorAtual=1, movimentoValido=0;
