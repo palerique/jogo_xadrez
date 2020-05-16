@@ -2,6 +2,8 @@
 
 int main () {
     int linhaPeca, colunaPeca, linhaDestino, colunaDestino, jogadorAtual=1, movimentoValido=0;
+
+    inicializar_tabuleiro();
     
     while(1) {
         printf("Jogador Atual: %d\n", jogadorAtual);
@@ -16,7 +18,13 @@ int main () {
         printf("Entre com a coluna para onde deseja movimentar: ");
         scanf("%d", &colunaDestino);
         
-        movimentoValido=movimentar_peca(linhaPeca, colunaPeca, linhaDestino, colunaDestino, jogadorAtual);
+        Posicao posicaoAtual, posicaoDestino;
+        posicaoAtual.linha=linhaPeca;
+        posicaoAtual.coluna=colunaPeca;
+        posicaoDestino.linha=linhaDestino;
+        posicaoDestino.coluna=colunaDestino;
+
+        movimentoValido=movimentar_peca(posicaoAtual, posicaoDestino, jogadorAtual);
         
         jogadorAtual*=-1;
     }
