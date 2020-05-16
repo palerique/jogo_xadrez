@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "pecas.h"
 
 #define PEAO_BRANCO 'p'
 #define PEAO_PRETO 'P'
@@ -16,8 +17,6 @@
 #define PRETO 1
 #define BRANCO 0
 
-#define LINHAS_TABULEIRO 8
-#define COLUNAS_TABULEIRO 8
 
 char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= { 
   {TORRE_BRANCO, CAVALO_BRANCO, BISPO_BRANCO, REI_BRANCO, RAINHA_BRANCO, BISPO_BRANCO, CAVALO_BRANCO, TORRE_BRANCO},
@@ -30,38 +29,17 @@ char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= {
   {TORRE_PRETO, CAVALO_PRETO, BISPO_PRETO, RAINHA_PRETO, REI_PRETO, BISPO_PRETO, CAVALO_PRETO, TORRE_PRETO}
 };
 
-typedef struct {
-	int linha, coluna;
-} Posicao ;
-
-typedef struct {
-	char tipo;
-	int cor;
-	Posicao posicao;
-	int movimentos;
-} Peca ;
-
 Peca pecas[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
 
-#define VERDADEIRO 1
-#define FALSO 0
+
 
 void inicializar_tabuleiro();
 void exibir_tabuleiro();
 int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual);
 int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtual);
-int movimentar_peao_branco(Peca peca, Posicao posicaoDestino);
-int movimentar_peao_preto(Peca peca, Posicao posicaoDestino);
-int movimentar_torre_branco(Peca peca, Posicao posicaoDestino);
-int movimentar_torre_preto(Peca peca, Posicao posicaoDestino);
-int movimentar_cavalo_branco(Peca peca, Posicao posicaoDestino);
-int movimentar_cavalo_preto(Peca peca, Posicao posicaoDestino);
-int movimentar_bispo_branco(Peca peca, Posicao posicaoDestino);
-int movimentar_bispo_preto(Peca peca, Posicao posicaoDestino);
-int movimentar_rei_branco(Peca peca, Posicao posicaoDestino);
-int movimentar_rei_preto(Peca peca, Posicao posicaoDestino);
-int movimentar_rainha_branco(Peca peca, Posicao posicaoDestino);
-int movimentar_rainha_preto(Peca peca, Posicao posicaoDestino);
+
+int existePeca(Posicao posicao);
+int ehPecaOponente(Peca peca, Posicao posicaoDestino);
 
 void exibir_tabuleiro() {
 	int linha, coluna;
@@ -194,40 +172,40 @@ int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual) {
 
 	switch (peca.tipo) {
 		case PEAO_BRANCO:
-			movimento_valido = movimentar_peao_branco(peca, posicaoDestino);
+			movimento_valido = movimentar_peao(peca, posicaoDestino);
 			break;
 		case PEAO_PRETO:
-		    movimento_valido = movimentar_peao_preto(peca, posicaoDestino);
+		    movimento_valido = movimentar_peao(peca, posicaoDestino);
 			break;
 		case TORRE_BRANCO:
-    		movimento_valido = movimentar_torre_branco(peca, posicaoDestino);
+    		movimento_valido = movimentar_torre(peca, posicaoDestino);
 			break;
 		case TORRE_PRETO:
-    		movimento_valido = movimentar_torre_preto(peca, posicaoDestino);
+    		movimento_valido = movimentar_torre(peca, posicaoDestino);
 			break;
 		case CAVALO_BRANCO:
-    		movimento_valido = movimentar_cavalo_branco(peca, posicaoDestino);
+    		movimento_valido = movimentar_cavalo(peca, posicaoDestino);
 			break;
 		case CAVALO_PRETO:    			
-			movimento_valido = movimentar_cavalo_preto(peca, posicaoDestino);
+			movimento_valido = movimentar_cavalo(peca, posicaoDestino);
 			break;
 		case BISPO_BRANCO:
-			movimento_valido = movimentar_bispo_branco(peca, posicaoDestino);
+			movimento_valido = movimentar_bispo(peca, posicaoDestino);
 			break;
 		case BISPO_PRETO:
-    		movimento_valido = movimentar_bispo_preto(peca, posicaoDestino);
+    		movimento_valido = movimentar_bispo(peca, posicaoDestino);
 			break;
 		case REI_BRANCO:
-    		movimento_valido = movimentar_rei_branco(peca, posicaoDestino);
+    		movimento_valido = movimentar_rei(peca, posicaoDestino);
 			break;
 		case REI_PRETO:
-    		movimento_valido = movimentar_rei_preto(peca, posicaoDestino);
+    		movimento_valido = movimentar_rei(peca, posicaoDestino);
 			break;
 		case RAINHA_BRANCO:
-    		movimento_valido = movimentar_rainha_branco(peca, posicaoDestino);
+    		movimento_valido = movimentar_rainha(peca, posicaoDestino);
 			break;
 		case RAINHA_PRETO:
-    		movimento_valido = movimentar_rainha_preto(peca, posicaoDestino);
+    		movimento_valido = movimentar_rainha(peca, posicaoDestino);
 			break;
 	}
 
@@ -251,14 +229,6 @@ int existePeca(Posicao posicao) {
 	return retorno;
 }
 
-void inicializarMatrizMovimentosPossiveis(int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]) {
-	int i=0, j=0;
-	for(i=0; i<LINHAS_TABULEIRO; i++) {
-		for(j=0; j<COLUNAS_TABULEIRO; j++) {
-			matrizMovimentosPossiveis[i][j]=FALSO;
-		}
-	}
-}
 
 int ehPecaOponente(Peca peca, Posicao posicaoDestino) {
 	Peca pecaDestino = pecas[posicaoDestino.linha][posicaoDestino.coluna];
@@ -268,110 +238,3 @@ int ehPecaOponente(Peca peca, Posicao posicaoDestino) {
 	return VERDADEIRO;
 }
 
-int movimentar_peao_branco(Peca peca, Posicao posicaoDestino) {
-		int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
-		inicializarMatrizMovimentosPossiveis(matrizMovimentosPossiveis);
-
-		int sucesso = 0;
-		Posicao p;
-
-		p.linha=peca.posicao.linha+1;
-		p.coluna=peca.posicao.coluna;
-
-		if (posicaoExiste(p) && !existePeca(p)) {
-			matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
-		}
-
-		p.linha=peca.posicao.linha+2;
-		p.coluna=peca.posicao.coluna;
-		Posicao p2;
-		p2.linha=peca.posicao.linha+1;
-		p2.coluna=peca.posicao.coluna;
-
-		if (posicaoExiste(p) && !existePeca(p) && posicaoExiste(p2) && !existePeca(p2)  && peca.movimentos== 0) {
-				matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
-		}
-
-		if(peca.posicao.coluna>0) {
-			p.linha=peca.posicao.linha+1;
-			p.coluna=peca.posicao.coluna-1;
-			if (posicaoExiste(p) && ehPecaOponente(peca, p)) {
-				matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
-			}			
-		}
-		if(peca.posicao.coluna<7) {
-			p.linha=peca.posicao.linha+1;
-			p.coluna=peca.posicao.coluna+1;
-			if (posicaoExiste(p) && ehPecaOponente(peca, p)) {
-				matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
-			}
-		}
-
-		return 1;
-}
-
-	int movimentar_peao_preto(Peca peca, Posicao posicaoDestino) {
-		int sucesso = 0;
-
- 		return 1;
-	}
-
-	int movimentar_torre_branco(Peca peca, Posicao posicaoDestino) {
-		printf("\nTorre Branco\n");
-
-		return 1;
-	}
-
-	int movimentar_torre_preto(Peca peca, Posicao posicaoDestino) {
-		printf("\nTorre Preto\n");
-
-		return 1;
-	}
-
-	int movimentar_cavalo_branco(Peca peca, Posicao posicaoDestino) {
-		printf("\nCavalo Branco\n");
-
-		return 1;
-	}
-
-	int movimentar_cavalo_preto(Peca peca, Posicao posicaoDestino) {
-		printf("\nCavalo Preto\n");
-
-		return 1;
-	}
-
-	int movimentar_bispo_branco(Peca peca, Posicao posicaoDestino) {
-		printf("\nBispo Branco\n");
-
- 		return 1;
-	}
-
-	int movimentar_bispo_preto(Peca peca, Posicao posicaoDestino) {
-		printf("\nBispo Preto\n");
-
- 		return 1;
-	}
-
-	int movimentar_rei_branco(Peca peca, Posicao posicaoDestino) {
-		printf("\nRei Branco\n");
-
- 		return 1;
-	}
-
-	int movimentar_rei_preto(Peca peca, Posicao posicaoDestino) {
-		printf("\nRei Preto\n");
-
- 		return 1;
-	}
-
-	int movimentar_rainha_branco(Peca peca, Posicao posicaoDestino) {
-		printf("\nRainha Branco\n");
-
- 		return 1;
-	}
-
-	int movimentar_rainha_preto(Peca peca, Posicao posicaoDestino) {
-		printf("\nRainha Preto\n");
-
- 		return 1;
-	}
