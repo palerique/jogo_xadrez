@@ -1,7 +1,3 @@
-
-
-int movimentar_torre(Peca peca, Posicao posicaoDestino) {
+void possivelMovimentoTorre(Peca *peca, Posicao posicaoDestino) {
 		printf("\nTorre Preto\n");
-
-		return 1;
 }

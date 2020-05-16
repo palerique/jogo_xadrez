@@ -1,22 +1,22 @@
-#define LINHAS_TABULEIRO 8
-#define COLUNAS_TABULEIRO 8
-#define VERDADEIRO 1
-#define FALSO 0
-#define PEAO_BRANCO 'p'
-#define PEAO_PRETO 'P'
-#define BISPO_BRANCO 'b'
-#define BISPO_PRETO 'B'
-#define CAVALO_BRANCO 'c'
-#define CAVALO_PRETO 'C'
-#define TORRE_BRANCO 't'
-#define TORRE_PRETO 'T'
-#define REI_BRANCO 'k'
-#define REI_PRETO 'K'
-#define RAINHA_BRANCO 'q'
-#define RAINHA_PRETO 'Q'
-#define ESPACO_VAZIO ' '
-#define PRETO 1
-#define BRANCO 0
+#define LINHAS_TABULEIRO 	8
+#define COLUNAS_TABULEIRO 	8
+#define VERDADEIRO 			1
+#define FALSO 				0
+#define PEAO_BRANCO			'p'
+#define PEAO_PRETO 			'P'
+#define BISPO_BRANCO 		'b'
+#define BISPO_PRETO 		'B'
+#define CAVALO_BRANCO 		'c'
+#define CAVALO_PRETO 		'C'
+#define TORRE_BRANCO 		't'
+#define TORRE_PRETO 		'T'
+#define REI_BRANCO 			'k'
+#define REI_PRETO 			'K'
+#define RAINHA_BRANCO 		'q'
+#define RAINHA_PRETO 		'Q'
+#define ESPACO_VAZIO 		' '
+#define PRETO 				1
+#define BRANCO 				0
 
 typedef struct {
 	int linha, coluna;
@@ -27,6 +27,7 @@ typedef struct {
 	int cor;
 	Posicao posicao;
 	int movimentos;
+	int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
 } Peca ;
 
 Peca pecas[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
@@ -34,19 +35,19 @@ Peca pecas[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
 int posicaoExiste(Posicao posicao);
 int existePeca(Posicao posicao);
 int ehPecaOponente(Peca peca, Posicao posicaoDestino);
-int movimentar_peao(Peca peca, Posicao posicaoDestino);
-int movimentar_rainha(Peca peca, Posicao posicaoDestino);
-int movimentar_cavalo(Peca peca, Posicao posicaoDestino);
-int movimentar_rei(Peca peca, Posicao posicaoDestino);
-int movimentar_torre(Peca peca, Posicao posicaoDestino);
-int movimentar_bispo(Peca peca, Posicao posicaoDestino);
-void inicializarMatrizMovimentosPossiveis(int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]);
+void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino);
+void possivelMovimentoRainha(Peca *peca, Posicao posicaoDestino);
+void possivelMovimentoCavalo(Peca *peca, Posicao posicaoDestino);
+void possivelMovimentoRei(Peca *peca, Posicao posicaoDestino);
+void possivelMovimentoTorre(Peca *peca, Posicao posicaoDestino);
+void possivelMovimentoBispo(Peca *peca, Posicao posicaoDestino);
+void inicializarMatrizMovimentosPossiveis(Peca *peca);
 
-void inicializarMatrizMovimentosPossiveis(int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]) {
+void inicializarMatrizMovimentosPossiveis(Peca *peca) {
 	int i=0, j=0;
 	for(i=0; i<LINHAS_TABULEIRO; i++) {
 		for(j=0; j<COLUNAS_TABULEIRO; j++) {
-			matrizMovimentosPossiveis[i][j]=FALSO;
+			peca->matrizMovimentosPossiveis[i][j]=FALSO;
 		}
 	}
 }

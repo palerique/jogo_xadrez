@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "pecas.h"
-#include "tabuleiro.h"
 
 char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= { 
   {TORRE_BRANCO, CAVALO_BRANCO, BISPO_BRANCO, REI_BRANCO, RAINHA_BRANCO, BISPO_BRANCO, CAVALO_BRANCO, TORRE_BRANCO},
@@ -146,46 +145,54 @@ int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual) {
 		*/
 	printf("\nPeça selecionada '%c'", peca.tipo);
 	printf("\nAlvo do movimento '%c'\n", pecas[posicaoDestino.linha][posicaoDestino.coluna].tipo);
-
+	int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
 	switch (peca.tipo) {
 		case PEAO_BRANCO:
-			movimento_valido = movimentar_peao(peca, posicaoDestino);
+			possivelMovimentoPeao(&peca, posicaoDestino);
 			break;
 		case PEAO_PRETO:
-		    movimento_valido = movimentar_peao(peca, posicaoDestino);
+			possivelMovimentoPeao(&peca, posicaoDestino);
 			break;
 		case TORRE_BRANCO:
-    		movimento_valido = movimentar_torre(peca, posicaoDestino);
+    		possivelMovimentoTorre(&peca, posicaoDestino);
 			break;
 		case TORRE_PRETO:
-    		movimento_valido = movimentar_torre(peca, posicaoDestino);
+    		possivelMovimentoTorre(&peca, posicaoDestino);
 			break;
 		case CAVALO_BRANCO:
-    		movimento_valido = movimentar_cavalo(peca, posicaoDestino);
+    		possivelMovimentoCavalo(&peca, posicaoDestino);
 			break;
 		case CAVALO_PRETO:    			
-			movimento_valido = movimentar_cavalo(peca, posicaoDestino);
+			possivelMovimentoCavalo(&peca, posicaoDestino);
 			break;
 		case BISPO_BRANCO:
-			movimento_valido = movimentar_bispo(peca, posicaoDestino);
+			possivelMovimentoBispo(&peca, posicaoDestino);
 			break;
 		case BISPO_PRETO:
-    		movimento_valido = movimentar_bispo(peca, posicaoDestino);
+    		possivelMovimentoBispo(&peca, posicaoDestino);
 			break;
 		case REI_BRANCO:
-    		movimento_valido = movimentar_rei(peca, posicaoDestino);
+    		possivelMovimentoRei(&peca, posicaoDestino);
 			break;
 		case REI_PRETO:
-    		movimento_valido = movimentar_rei(peca, posicaoDestino);
+    		possivelMovimentoRei(&peca, posicaoDestino);
 			break;
 		case RAINHA_BRANCO:
-    		movimento_valido = movimentar_rainha(peca, posicaoDestino);
+    		possivelMovimentoRainha(&peca, posicaoDestino);
 			break;
 		case RAINHA_PRETO:
-    		movimento_valido = movimentar_rainha(peca, posicaoDestino);
+    		possivelMovimentoRainha(&peca, posicaoDestino);
 			break;
 	}
 
+	int i,j;
+	printf("\n");
+	for(i=0;i<LINHAS_TABULEIRO;i++) {
+		for(j=0;j<COLUNAS_TABULEIRO;j++) {
+			printf("%d ",peca.matrizMovimentosPossiveis[i][j]);
+		}
+		printf("\n");
+	}
 	return movimento_valido;
 }
 
