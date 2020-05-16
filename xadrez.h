@@ -260,42 +260,52 @@ void inicializarMatrizMovimentosPossiveis(int matrizMovimentosPossiveis[LINHAS_T
 	}
 }
 
+int ehPecaOponente(Peca peca, Posicao posicaoDestino) {
+	Peca pecaDestino = pecas[posicaoDestino.linha][posicaoDestino.coluna];
+	if(pecaDestino.cor != peca.cor)
+		return FALSO;
+
+	return VERDADEIRO;
+}
+
 int movimentar_peao_branco(Peca peca, Posicao posicaoDestino) {
 		int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
 		inicializarMatrizMovimentosPossiveis(matrizMovimentosPossiveis);
-		/*		
 
 		int sucesso = 0;
 		Posicao p;
 
-		p.linha=linhaPeca+1;
-		p.coluna=colunaPeca;
+		p.linha=peca.posicao.linha+1;
+		p.coluna=peca.posicao.coluna;
+
 		if (posicaoExiste(p) && !existePeca(p)) {
 			matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 		}
 
-		p.linha=linhaPeca+2;
-		p.coluna=colunaPeca;
+		p.linha=peca.posicao.linha+2;
+		p.coluna=peca.posicao.coluna;
 		Posicao p2;
-		p2.linha=linhaPeca+1;
-		p2.coluna=colunaPeca;
+		p2.linha=peca.posicao.linha+1;
+		p2.coluna=peca.posicao.coluna;
 
-		if (posicaoExiste(p) && !existePeca(p) && posicaoExiste(p2) && !existePeca(p2) ) { //&& getContagemMovimento() == 0) {
+		if (posicaoExiste(p) && !existePeca(p) && posicaoExiste(p2) && !existePeca(p2)  && peca.movimentos== 0) {
 				matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 		}
-		if(posicao.getColuna()>0) {
-			p.setValores(posicao.getLinha() + 1, posicao.getColuna() - 1);
-			if (getTabuleiro().posicaoExiste(p) && ehPecaOponente(p)) {
-				matrizMovimentosPossiveis[p.getLinha()][p.getColuna()] = true;
+
+		if(peca.posicao.coluna>0) {
+			p.linha=peca.posicao.linha+1;
+			p.coluna=peca.posicao.coluna-1;
+			if (posicaoExiste(p) && ehPecaOponente(peca, p)) {
+				matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 			}			
 		}
-		if(posicao.getColuna()<7) {
-			p.setValores(posicao.getLinha() + 1, posicao.getColuna() + 1);
-			if (getTabuleiro().posicaoExiste(p) && ehPecaOponente(p)) {
-				matrizMovimentosPossiveis[p.getLinha()][p.getColuna()] = true;
+		if(peca.posicao.coluna<7) {
+			p.linha=peca.posicao.linha+1;
+			p.coluna=peca.posicao.coluna+1;
+			if (posicaoExiste(p) && ehPecaOponente(peca, p)) {
+				matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 			}
 		}
-*/		
 
 		return 1;
 }
