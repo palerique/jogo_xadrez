@@ -26,39 +26,51 @@ void inicializar_tabuleiro() {
 			
 			switch (pecaSelecionada) {
 				case PEAO_BRANCO:
+					peca.fn_movimentosPossiveis=possivelMovimentoPeao;
 					colocarNovaPeca(&peca, posicao, PEAO_BRANCO, BRANCO);
 					break;
 				case PEAO_PRETO:
+					peca.fn_movimentosPossiveis=possivelMovimentoPeao;
 					colocarNovaPeca(&peca, posicao, PEAO_PRETO, PRETO);
 					break;
 				case TORRE_BRANCO:
+					peca.fn_movimentosPossiveis=possivelMovimentoTorre;
 					colocarNovaPeca(&peca, posicao, TORRE_BRANCO, BRANCO);
 					break;
 				case TORRE_PRETO:
+					peca.fn_movimentosPossiveis=possivelMovimentoTorre;
 					colocarNovaPeca(&peca, posicao, TORRE_PRETO, PRETO);
 					break;
 				case CAVALO_BRANCO:
+					peca.fn_movimentosPossiveis=possivelMovimentoCavalo;
 					colocarNovaPeca(&peca, posicao, CAVALO_BRANCO, BRANCO);
 					break;
 				case CAVALO_PRETO:
+					peca.fn_movimentosPossiveis=possivelMovimentoCavalo;
 					colocarNovaPeca(&peca, posicao, CAVALO_PRETO, PRETO);
 					break;
 				case BISPO_BRANCO:
+					peca.fn_movimentosPossiveis=possivelMovimentoBispo;
 					colocarNovaPeca(&peca, posicao, BISPO_BRANCO, BRANCO);
 					break;
 				case BISPO_PRETO:
+					peca.fn_movimentosPossiveis=possivelMovimentoBispo;
 					colocarNovaPeca(&peca, posicao, BISPO_PRETO, PRETO);
 					break;
 				case REI_BRANCO:
+					peca.fn_movimentosPossiveis=possivelMovimentoRei;
 					colocarNovaPeca(&peca, posicao, REI_BRANCO, BRANCO);
 					break;
 				case REI_PRETO:
+					peca.fn_movimentosPossiveis=possivelMovimentoRei;
 					colocarNovaPeca(&peca, posicao, REI_PRETO, PRETO);
 					break;
 				case RAINHA_BRANCO:
+					peca.fn_movimentosPossiveis=possivelMovimentoRainha;
 					colocarNovaPeca(&peca, posicao, RAINHA_BRANCO, BRANCO);
 					break;
 				case RAINHA_PRETO:
+					peca.fn_movimentosPossiveis=possivelMovimentoRainha;
 					colocarNovaPeca(&peca, posicao, RAINHA_PRETO, PRETO);
 					break;
 				case ESPACO_VAZIO:
@@ -117,44 +129,7 @@ int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual) {
 		|| posicaoDestino.coluna <0 || posicaoDestino.coluna > (LINHAS_TABULEIRO-1))
 			return FALSO;
 
-	switch (peca->tipo) {
-		case PEAO_BRANCO:
-			possivelMovimentoPeao(peca, posicaoDestino);
-			break;
-		case PEAO_PRETO:
-			possivelMovimentoPeao(peca, posicaoDestino);
-			break;
-		case TORRE_BRANCO:
-    		possivelMovimentoTorre(peca, posicaoDestino);
-			break;
-		case TORRE_PRETO:
-    		possivelMovimentoTorre(peca, posicaoDestino);
-			break;
-		case CAVALO_BRANCO:
-    		possivelMovimentoCavalo(peca, posicaoDestino);
-			break;
-		case CAVALO_PRETO:    			
-			possivelMovimentoCavalo(peca, posicaoDestino);
-			break;
-		case BISPO_BRANCO:
-			possivelMovimentoBispo(peca, posicaoDestino);
-			break;
-		case BISPO_PRETO:
-    		possivelMovimentoBispo(peca, posicaoDestino);
-			break;
-		case REI_BRANCO:
-    		possivelMovimentoRei(peca, posicaoDestino);
-			break;
-		case REI_PRETO:
-    		possivelMovimentoRei(peca, posicaoDestino);
-			break;
-		case RAINHA_BRANCO:
-    		possivelMovimentoRainha(peca, posicaoDestino);
-			break;
-		case RAINHA_PRETO:
-    		possivelMovimentoRainha(peca, posicaoDestino);
-			break;
-	}
+    peca->fn_movimentosPossiveis(peca, posicaoDestino);
 
 	return VERDADEIRO;
 }

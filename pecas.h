@@ -22,12 +22,13 @@ typedef struct {
 	int linha, coluna;
 } Posicao ;
 
-typedef struct {
+typedef struct str_peca {
 	char tipo;
 	int cor;
 	Posicao posicao;
 	int movimentos;
 	int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
+    void (*fn_movimentosPossiveis) (struct str_peca *peca, Posicao posicaoDestino);
 } Peca ;
 
 Peca pecas[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];

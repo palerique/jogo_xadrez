@@ -61,7 +61,7 @@ void exibir_tabuleiro() {
 					printf("%s  ","\xe2\x99\x98");
 					break;
 				case ESPACO_VAZIO:
-					printf("  ");
+					printf("   ");
 					break;
 			}
 		}
