@@ -14,7 +14,7 @@ char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= {
 
 void inicializar_tabuleiro();
 void exibir_tabuleiro();
-int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual);
+int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual);
 int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtual);
 
 void exibir_tabuleiro() {
@@ -121,78 +121,79 @@ int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtu
 
 	posicaoAtual.linha--; posicaoAtual.coluna--; posicaoDestino.linha--; posicaoDestino.coluna--;
 	Peca peca = pecas[posicaoAtual.linha][posicaoAtual.coluna];
-	movimento_valido = validar_movimento(peca, posicaoDestino, jogadorAtual);
+	movimento_valido = validar_movimento(&peca, posicaoDestino, jogadorAtual);
 
-	if (movimento_valido==1) {
+	int i,j;
+	for(i=0; i<LINHAS_TABULEIRO; i++) {
+		for(j=0; j<LINHAS_TABULEIRO; j++) {
+			printf("%d", peca.matrizMovimentosPossiveis[i][j]);
+		}
+		printf("\n");
+	}
+
+	if(peca.matrizMovimentosPossiveis[posicaoDestino.linha][posicaoDestino.coluna]==VERDADEIRO) {
+		peca.posicao=posicaoDestino;
+		pecas[posicaoDestino.linha][posicaoDestino.coluna]=peca;
+
+		Peca pecaVazia;
+		pecaVazia.tipo=ESPACO_VAZIO;
+		pecas[posicaoAtual.linha][posicaoAtual.coluna]=pecaVazia;
+
 		printf("\nMovimento realizado com SUCESSO!!\n");
-		pecas[posicaoDestino.linha][posicaoDestino.coluna] = peca;
-		pecas[posicaoAtual.linha][posicaoAtual.coluna].tipo = ESPACO_VAZIO;
 	} else {
-		printf("\nMovimento invAlido\n");
+
+		printf("\nMovimento invAlido %d %d\n", peca.posicao.linha, peca.posicao.coluna);
 	}
 		
 	return 1;
 }
 
-int validar_movimento(Peca peca, Posicao posicaoDestino, int jogadorAtual) {
-	int movimento_valido = 0;
-	printf("%d %d %d %d", peca.posicao.linha, peca.posicao.coluna, posicaoDestino.linha, posicaoDestino.coluna);
-		/*
-		if (linhaPeca < LINHA_INFERIOR || linhaPeca > LINHA_SUPERIOR || colunaPeca < COLUNA_INFERIOR
-				|| colunaPeca > COLUNA_SUPERIOR || linhaDestino < LINHA_INFERIOR || linhaDestino > LINHA_SUPERIOR
-				|| colunaDestino < LINHA_INFERIOR || colunaDestino > LINHA_SUPERIOR)
-			return movimento_valido;
-		*/
-	printf("\nPeça selecionada '%c'", peca.tipo);
-	printf("\nAlvo do movimento '%c'\n", pecas[posicaoDestino.linha][posicaoDestino.coluna].tipo);
-	int matrizMovimentosPossiveis[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
-	switch (peca.tipo) {
+int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual) {
+	if (peca->posicao.linha < 0 || peca->posicao.linha > (LINHAS_TABULEIRO-1) 
+		|| peca->posicao.coluna < 0 || peca->posicao.coluna > (COLUNAS_TABULEIRO-1) 
+		|| posicaoDestino.linha < 0 || posicaoDestino.linha > (LINHAS_TABULEIRO-1) 
+		|| posicaoDestino.coluna <0 || posicaoDestino.coluna > (LINHAS_TABULEIRO-1))
+			return FALSO;
+
+	switch (peca->tipo) {
 		case PEAO_BRANCO:
-			possivelMovimentoPeao(&peca, posicaoDestino);
+			possivelMovimentoPeao(peca, posicaoDestino);
 			break;
 		case PEAO_PRETO:
-			possivelMovimentoPeao(&peca, posicaoDestino);
+			possivelMovimentoPeao(peca, posicaoDestino);
 			break;
 		case TORRE_BRANCO:
-    		possivelMovimentoTorre(&peca, posicaoDestino);
+    		possivelMovimentoTorre(peca, posicaoDestino);
 			break;
 		case TORRE_PRETO:
-    		possivelMovimentoTorre(&peca, posicaoDestino);
+    		possivelMovimentoTorre(peca, posicaoDestino);
 			break;
 		case CAVALO_BRANCO:
-    		possivelMovimentoCavalo(&peca, posicaoDestino);
+    		possivelMovimentoCavalo(peca, posicaoDestino);
 			break;
 		case CAVALO_PRETO:    			
-			possivelMovimentoCavalo(&peca, posicaoDestino);
+			possivelMovimentoCavalo(peca, posicaoDestino);
 			break;
 		case BISPO_BRANCO:
-			possivelMovimentoBispo(&peca, posicaoDestino);
+			possivelMovimentoBispo(peca, posicaoDestino);
 			break;
 		case BISPO_PRETO:
-    		possivelMovimentoBispo(&peca, posicaoDestino);
+    		possivelMovimentoBispo(peca, posicaoDestino);
 			break;
 		case REI_BRANCO:
-    		possivelMovimentoRei(&peca, posicaoDestino);
+    		possivelMovimentoRei(peca, posicaoDestino);
 			break;
 		case REI_PRETO:
-    		possivelMovimentoRei(&peca, posicaoDestino);
+    		possivelMovimentoRei(peca, posicaoDestino);
 			break;
 		case RAINHA_BRANCO:
-    		possivelMovimentoRainha(&peca, posicaoDestino);
+    		possivelMovimentoRainha(peca, posicaoDestino);
 			break;
 		case RAINHA_PRETO:
-    		possivelMovimentoRainha(&peca, posicaoDestino);
+    		possivelMovimentoRainha(peca, posicaoDestino);
 			break;
 	}
 
-	int i,j;
-	printf("\n");
-	for(i=0;i<LINHAS_TABULEIRO;i++) {
-		for(j=0;j<COLUNAS_TABULEIRO;j++) {
-			printf("%d ",peca.matrizMovimentosPossiveis[i][j]);
-		}
-		printf("\n");
-	}
-	return movimento_valido;
+	return VERDADEIRO;
 }
 
