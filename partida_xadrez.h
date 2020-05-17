@@ -141,7 +141,6 @@ int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtu
 
 		printf("\nMovimento realizado com SUCESSO!!\n");
 	} else {
-
 		printf("\nMovimento invAlido %d %d\n", peca.posicao.linha, peca.posicao.coluna);
 	}
 		
