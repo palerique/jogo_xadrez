@@ -13,15 +13,19 @@ void exibir_tabuleiro() {
 	SetConsoleOutputCP(65001);
 	int linha, coluna;
 
-	printf(" \t ");
+	printf("   ");
 
 	for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++)
 		printf("%d  ", coluna+1);
 
 	printf("\n");
+	for (coluna = 0; coluna < COLUNAS_TABULEIRO*3+1; coluna++)
+		printf("%s","\xe2\x94\x81");
+	printf("\n");
 
 	for (linha = 0; linha < LINHAS_TABULEIRO; linha++) {
-		printf("%d\t", linha+1);
+		printf("%d\xe2\x94\x83", linha+1);
+
 		for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++) {
 			switch (pecas[linha][coluna].tipo) {
 				case REI_BRANCO:
@@ -66,5 +70,11 @@ void exibir_tabuleiro() {
 			}
 		}
 		printf("\n");
+
 	}
+
+	for (coluna = 0; coluna < COLUNAS_TABULEIRO*3+1; coluna++)
+		printf("%s","\xe2\x94\x81");
+	printf("\n");
+
 }
