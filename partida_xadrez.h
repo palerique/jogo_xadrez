@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <locale.h>
+#include <Windows.h>
 #include "pecas.h"
 
 char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= { 
@@ -12,25 +14,67 @@ char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= {
   {TORRE_PRETO, CAVALO_PRETO, BISPO_PRETO, RAINHA_PRETO, REI_PRETO, BISPO_PRETO, CAVALO_PRETO, TORRE_PRETO}
 };
 
+void colocarNovaPeca(Peca *peca, Posicao posicao, int tipoPeca, int cor);
 void inicializar_tabuleiro();
 void exibir_tabuleiro();
 int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual);
 int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtual);
 
 void exibir_tabuleiro() {
+	SetConsoleOutputCP(65001);
 	int linha, coluna;
 
-	printf(" \t");
+	printf(" \t ");
 
 	for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++)
-		printf("%3d", coluna+1);
+		printf("%d  ", coluna+1);
 
 	printf("\n");
 
 	for (linha = 0; linha < LINHAS_TABULEIRO; linha++) {
 		printf("%d\t", linha+1);
 		for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++) {
-			printf("%3c", pecas[linha][coluna].tipo);
+			switch (pecas[linha][coluna].tipo) {
+				case REI_BRANCO:
+					printf("%s  ","\xe2\x99\x94");
+					break;
+				case REI_PRETO:
+					printf("%s  ","\xe2\x99\x9a");
+					break;
+				case PEAO_BRANCO:
+					printf("%s  ","\xe2\x99\x99");
+					break;
+				case PEAO_PRETO:
+					printf("%s  ","\xe2\x99\x9f");
+					break;
+				case BISPO_PRETO:
+					printf("%s  ","\xe2\x99\x9d");
+					break;
+				case BISPO_BRANCO:
+					printf("%s  ","\xe2\x99\x97");
+					break;
+				case RAINHA_PRETO:
+					printf("%s  ","\xe2\x99\x9b");
+					break;
+				case RAINHA_BRANCO:
+					printf("%s  ","\xe2\x99\x95");
+					break;
+				case TORRE_BRANCO:
+					printf("%s  ","\xe2\x99\x96");
+					break;
+				case TORRE_PRETO:
+					printf("%s  ","\xe2\x99\x9c");
+					break;
+				case CAVALO_PRETO:
+					printf("%s  ","\xe2\x99\x9e");
+					break;
+				case CAVALO_BRANCO:
+					printf("%s  ","\xe2\x99\x98");
+					break;
+				case ESPACO_VAZIO:
+					printf("  ");
+					break;
+			}
 		}
 		printf("\n");
 	}
@@ -42,76 +86,52 @@ void inicializar_tabuleiro() {
 		for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++) {
 			char pecaSelecionada = tabuleiro[linha][coluna];
 			Peca peca;
-			peca.posicao.linha=linha;
-			peca.posicao.coluna=coluna;
+			
+			Posicao posicao;
+			posicao.linha=linha;
+			posicao.coluna=coluna;
+			
 			switch (pecaSelecionada) {
 				case PEAO_BRANCO:
-					peca.tipo=PEAO_BRANCO;
-					peca.movimentos=0;
-					peca.cor=BRANCO;
+					colocarNovaPeca(&peca, posicao, PEAO_BRANCO, BRANCO);
 					break;
 				case PEAO_PRETO:
-					peca.tipo=PEAO_PRETO;
-					peca.movimentos=0;
-					peca.cor=PRETO;
+					colocarNovaPeca(&peca, posicao, PEAO_PRETO, PRETO);
 					break;
 				case TORRE_BRANCO:
-					peca.tipo=TORRE_BRANCO;
-					peca.movimentos=0;
-					peca.cor=BRANCO;
+					colocarNovaPeca(&peca, posicao, TORRE_BRANCO, BRANCO);
 					break;
 				case TORRE_PRETO:
-					peca.tipo=TORRE_PRETO;
-					peca.movimentos=0;
-					peca.cor=PRETO;
+					colocarNovaPeca(&peca, posicao, TORRE_PRETO, PRETO);
 					break;
 				case CAVALO_BRANCO:
-					peca.tipo=CAVALO_BRANCO;
-					peca.movimentos=0;
-					peca.cor=BRANCO;
+					colocarNovaPeca(&peca, posicao, CAVALO_BRANCO, BRANCO);
 					break;
 				case CAVALO_PRETO:
-					peca.tipo=CAVALO_PRETO; 			
-					peca.cor=PRETO;
-					peca.movimentos=0;
+					colocarNovaPeca(&peca, posicao, CAVALO_PRETO, PRETO);
 					break;
 				case BISPO_BRANCO:
-					peca.tipo=BISPO_BRANCO;
-					peca.movimentos=0;
-					peca.cor=BRANCO;
+					colocarNovaPeca(&peca, posicao, BISPO_BRANCO, BRANCO);
 					break;
 				case BISPO_PRETO:
-					peca.tipo=BISPO_PRETO;
-					peca.movimentos=0;
-					peca.cor=PRETO;
+					colocarNovaPeca(&peca, posicao, BISPO_PRETO, PRETO);
 					break;
 				case REI_BRANCO:
-					peca.tipo=REI_BRANCO;
-					peca.movimentos=0;
-					peca.cor=BRANCO;
+					colocarNovaPeca(&peca, posicao, REI_BRANCO, BRANCO);
 					break;
 				case REI_PRETO:
-					peca.tipo=REI_PRETO;
-					peca.movimentos=0;
-					peca.cor=PRETO;
+					colocarNovaPeca(&peca, posicao, REI_PRETO, PRETO);
 					break;
 				case RAINHA_BRANCO:
-					peca.tipo=RAINHA_BRANCO;
-					peca.movimentos=0;
-					peca.cor=BRANCO;
+					colocarNovaPeca(&peca, posicao, RAINHA_BRANCO, BRANCO);
 					break;
 				case RAINHA_PRETO:
-					peca.tipo=RAINHA_PRETO;
-					peca.movimentos=0;
-					peca.cor=PRETO;
+					colocarNovaPeca(&peca, posicao, RAINHA_PRETO, PRETO);
 					break;
 				case ESPACO_VAZIO:
-					peca.tipo=ESPACO_VAZIO;
-					peca.cor=ESPACO_VAZIO;
-					peca.movimentos=0;
+					colocarNovaPeca(&peca, posicao, ESPACO_VAZIO, ESPACO_VAZIO);
 					break;
 			}
-			pecas[linha][coluna]=peca;
 		}
 	}
 }
@@ -121,16 +141,18 @@ int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtu
 
 	posicaoAtual.linha--; posicaoAtual.coluna--; posicaoDestino.linha--; posicaoDestino.coluna--;
 	Peca peca = pecas[posicaoAtual.linha][posicaoAtual.coluna];
+	peca.posicao.linha=posicaoAtual.linha;
+	peca.posicao.coluna=posicaoAtual.coluna;
 	movimento_valido = validar_movimento(&peca, posicaoDestino, jogadorAtual);
 
+	printf("%d %d %d %d\n", posicaoDestino.linha, posicaoDestino.coluna, peca.posicao.linha, peca.posicao.coluna);
 	int i,j;
-	for(i=0; i<LINHAS_TABULEIRO; i++) {
-		for(j=0; j<LINHAS_TABULEIRO; j++) {
-			printf("%d", peca.matrizMovimentosPossiveis[i][j]);
+	for(i=0; i<8; i++) {
+		for(j=0; j<8; j++){
+			printf("%d ", peca.matrizMovimentosPossiveis[i][j] );
 		}
 		printf("\n");
 	}
-
 	if(peca.matrizMovimentosPossiveis[posicaoDestino.linha][posicaoDestino.coluna]==VERDADEIRO) {
 		peca.posicao=posicaoDestino;
 		pecas[posicaoDestino.linha][posicaoDestino.coluna]=peca;
@@ -141,10 +163,18 @@ int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtu
 
 		printf("\nMovimento realizado com SUCESSO!!\n");
 	} else {
-		printf("\nMovimento invAlido %d %d\n", peca.posicao.linha, peca.posicao.coluna);
+		printf("\nMovimento invalido\n");
 	}
 		
 	return 1;
+}
+
+void colocarNovaPeca(Peca *peca, Posicao posicao, int tipoPeca, int cor) {
+	peca->tipo=tipoPeca;
+	peca->cor=cor;
+	peca->movimentos=0;
+	pecas[posicao.linha][posicao.coluna]=*peca;
+	peca->posicao=posicao;
 }
 
 int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual) {

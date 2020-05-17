@@ -69,7 +69,6 @@ int existePeca(Posicao posicao) {
 	return retorno;
 }
 
-
 int ehPecaOponente(Peca peca, Posicao posicaoDestino) {
 	Peca pecaDestino = pecas[posicaoDestino.linha][posicaoDestino.coluna];
 	if(pecaDestino.cor != peca.cor)

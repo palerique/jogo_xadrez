@@ -2,10 +2,9 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 	inicializarMatrizMovimentosPossiveis(peca);
 	if(peca->cor==BRANCO) {
 		Posicao p;
-
 		p.linha=peca->posicao.linha+1;
 		p.coluna=peca->posicao.coluna;
-
+		
 		if (posicaoExiste(p) && !existePeca(p)) {
 			peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 		}
@@ -34,7 +33,6 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 				peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 			}
 		}
-		
 	} else {
 		Posicao p;
 
