@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <locale.h>
-#include <Windows.h>
 #include "pecas.h"
 #include "tela.h"
 

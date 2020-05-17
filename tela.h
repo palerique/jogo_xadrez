@@ -10,7 +10,6 @@ char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= {
 };
 
 void exibir_tabuleiro() {
-	SetConsoleOutputCP(65001);
 	int linha, coluna;
 
 	printf("   ");
