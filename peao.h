@@ -15,9 +15,8 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 		Posicao p2;
 		p2.linha=peca->posicao.linha+1;
 		p2.coluna=peca->posicao.coluna;
-
 		if (posicaoExiste(p) && !existePeca(p) && posicaoExiste(p2) && !existePeca(p2)  && peca->movimentos== 0) {
-				peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
+			peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 		}
 
 		if(peca->posicao.coluna>0) {
@@ -27,6 +26,7 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 				peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 			}			
 		}
+
 		if(peca->posicao.coluna<7) {
 			p.linha=peca->posicao.linha+1;
 			p.coluna=peca->posicao.coluna+1;
@@ -34,6 +34,7 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 				peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 			}
 		}
+		
 	} else {
 		Posicao p;
 
@@ -51,7 +52,7 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 		p2.coluna=peca->posicao.coluna;
 
 		if (posicaoExiste(p) && !existePeca(p) && posicaoExiste(p2) && !existePeca(p2)  && peca->movimentos== 0) {
-				peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
+			peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 		}
 
 		if(peca->posicao.coluna>0) {
@@ -61,6 +62,7 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 				peca->matrizMovimentosPossiveis[p.linha][p.coluna] = VERDADEIRO;
 			}			
 		}
+
 		if(peca->posicao.coluna<7) {
 			p.linha=peca->posicao.linha-1;
 			p.coluna=peca->posicao.coluna+1;
@@ -69,5 +71,4 @@ void possivelMovimentoPeao(Peca *peca, Posicao posicaoDestino) {
 			}
 		}
 	}
-
 }
