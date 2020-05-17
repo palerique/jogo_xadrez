@@ -2,17 +2,8 @@
 #include <locale.h>
 #include <Windows.h>
 #include "pecas.h"
+#include "tela.h"
 
-char tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO]= { 
-  {TORRE_BRANCO, CAVALO_BRANCO, BISPO_BRANCO, REI_BRANCO, RAINHA_BRANCO, BISPO_BRANCO, CAVALO_BRANCO, TORRE_BRANCO},
-  {PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO, PEAO_BRANCO},
-  {ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO},
-  {ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO},
-  {ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO},
-  {ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO, ESPACO_VAZIO},
-  {PEAO_PRETO, PEAO_PRETO, PEAO_PRETO, PEAO_PRETO, PEAO_PRETO, PEAO_PRETO, PEAO_PRETO, PEAO_PRETO},
-  {TORRE_PRETO, CAVALO_PRETO, BISPO_PRETO, RAINHA_PRETO, REI_PRETO, BISPO_PRETO, CAVALO_PRETO, TORRE_PRETO}
-};
 
 void colocarNovaPeca(Peca *peca, Posicao posicao, int tipoPeca, int cor);
 void inicializar_tabuleiro();
@@ -20,65 +11,7 @@ void exibir_tabuleiro();
 int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual);
 int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtual);
 
-void exibir_tabuleiro() {
-	SetConsoleOutputCP(65001);
-	int linha, coluna;
 
-	printf(" \t ");
-
-	for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++)
-		printf("%d  ", coluna+1);
-
-	printf("\n");
-
-	for (linha = 0; linha < LINHAS_TABULEIRO; linha++) {
-		printf("%d\t", linha+1);
-		for (coluna = 0; coluna < COLUNAS_TABULEIRO; coluna++) {
-			switch (pecas[linha][coluna].tipo) {
-				case REI_BRANCO:
-					printf("%s  ","\xe2\x99\x94");
-					break;
-				case REI_PRETO:
-					printf("%s  ","\xe2\x99\x9a");
-					break;
-				case PEAO_BRANCO:
-					printf("%s  ","\xe2\x99\x99");
-					break;
-				case PEAO_PRETO:
-					printf("%s  ","\xe2\x99\x9f");
-					break;
-				case BISPO_PRETO:
-					printf("%s  ","\xe2\x99\x9d");
-					break;
-				case BISPO_BRANCO:
-					printf("%s  ","\xe2\x99\x97");
-					break;
-				case RAINHA_PRETO:
-					printf("%s  ","\xe2\x99\x9b");
-					break;
-				case RAINHA_BRANCO:
-					printf("%s  ","\xe2\x99\x95");
-					break;
-				case TORRE_BRANCO:
-					printf("%s  ","\xe2\x99\x96");
-					break;
-				case TORRE_PRETO:
-					printf("%s  ","\xe2\x99\x9c");
-					break;
-				case CAVALO_PRETO:
-					printf("%s  ","\xe2\x99\x9e");
-					break;
-				case CAVALO_BRANCO:
-					printf("%s  ","\xe2\x99\x98");
-					break;
-				case ESPACO_VAZIO:
-					printf("  ");
-					break;
-			}
-		}
-		printf("\n");
-	}
-}
 
 void inicializar_tabuleiro() {
 	int linha, coluna;
