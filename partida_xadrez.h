@@ -89,14 +89,7 @@ int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtu
 	peca.posicao.coluna=posicaoAtual.coluna;
 	movimento_valido = validar_movimento(&peca, posicaoDestino, jogadorAtual);
 
-	printf("%d %d %d %d\n", posicaoDestino.linha, posicaoDestino.coluna, peca.posicao.linha, peca.posicao.coluna);
 	int i,j;
-	for(i=0; i<8; i++) {
-		for(j=0; j<8; j++){
-			printf("%d ", peca.matrizMovimentosPossiveis[i][j] );
-		}
-		printf("\n");
-	}
 	if(peca.matrizMovimentosPossiveis[posicaoDestino.linha][posicaoDestino.coluna]==VERDADEIRO) {
 		peca.posicao=posicaoDestino;
 		pecas[posicaoDestino.linha][posicaoDestino.coluna]=peca;
@@ -132,4 +125,3 @@ int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual) {
 
 	return VERDADEIRO;
 }
-

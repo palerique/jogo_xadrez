@@ -73,9 +73,9 @@ int existePeca(Posicao posicao) {
 int ehPecaOponente(Peca peca, Posicao posicaoDestino) {
 	Peca pecaDestino = pecas[posicaoDestino.linha][posicaoDestino.coluna];
 	if(pecaDestino.cor != peca.cor)
-		return FALSO;
+		return VERDADEIRO;
 
-	return VERDADEIRO;
+	return FALSO;
 }
 
 #include "peao.h"
