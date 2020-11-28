@@ -18,6 +18,7 @@
 #define PRETO 				1
 #define BRANCO 				0
 
+// typedef é para o programador C criar seus próprios tipos de dados
 typedef struct {
 	int linha, coluna;
 } Posicao ;
