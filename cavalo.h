@@ -12,6 +12,8 @@ int podeMover(Peca pecaOrigem, Posicao posicaoDestino) {
 // movimento L do cavalo é ou duas casas para cima/baixo e uma casa para esquerda/direita
 // movimento L do cavalo é ou uma casa para cima/baixo e duas casas para esquerda/direita
 void possivelMovimentoCavalo(Peca *peca, Posicao posicaoDestino) {
+	inicializarMatrizMovimentosPossiveis(peca);
+
 	Posicao p;
 	// Movimento 1 - uma linha para cima e duas colunas para esquerda
 	p.linha = peca->posicao.linha - 1;
