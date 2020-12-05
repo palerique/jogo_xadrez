@@ -64,6 +64,10 @@ void inicializarMatrizMovimentosPossiveis(Peca *peca) {
     }
 }
 
+void salvarMovimentoPossivel(Peca *peca, Posicao *posicao) {
+    peca->matrizMovimentosPossiveis[(*posicao).linha][(*posicao).coluna] = VERDADEIRO;
+}
+
 int posicaoExiste(Posicao posicao) {
     int retorno = FALSO;
 
