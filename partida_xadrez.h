@@ -95,7 +95,6 @@ int movimentar_peca(Posicao posicaoAtual, Posicao posicaoDestino, int jogadorAtu
     peca.posicao.coluna = posicaoAtual.coluna;
     movimento_valido = validar_movimento(&peca, posicaoDestino, jogadorAtual);
 
-    int i, j;
     if (peca.matrizMovimentosPossiveis[posicaoDestino.linha][posicaoDestino.coluna] == VERDADEIRO) {
         peca.posicao = posicaoDestino;
         pecas[posicaoDestino.linha][posicaoDestino.coluna] = peca;
@@ -124,8 +123,9 @@ int validar_movimento(Peca *peca, Posicao posicaoDestino, int jogadorAtual) {
     if (peca->posicao.linha<0 || peca->posicao.linha>(LINHAS_TABULEIRO - 1)
         || peca->posicao.coluna<0 || peca->posicao.coluna>(COLUNAS_TABULEIRO - 1)
         || posicaoDestino.linha<0 || posicaoDestino.linha>(LINHAS_TABULEIRO - 1)
-        || posicaoDestino.coluna<0 || posicaoDestino.coluna>(LINHAS_TABULEIRO - 1))
+        || posicaoDestino.coluna<0 || posicaoDestino.coluna>(LINHAS_TABULEIRO - 1)) {
         return FALSO;
+    }
 
     peca->fn_movimentosPossiveis(peca, posicaoDestino);
 

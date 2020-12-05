@@ -56,7 +56,7 @@ void possivelMovimentoBispo(Peca *peca, Posicao posicaoDestino);
 void inicializarMatrizMovimentosPossiveis(Peca *peca);
 
 void inicializarMatrizMovimentosPossiveis(Peca *peca) {
-    int i = 0, j = 0;
+    int i, j;
     for (i = 0; i < LINHAS_TABULEIRO; i++) {
         for (j = 0; j < COLUNAS_TABULEIRO; j++) {
             peca->matrizMovimentosPossiveis[i][j] = FALSO;
